@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>우리 반 누리집</title>
+  <title>구산중 1학년 3반 누리집</title>
 
   <style>
     * {
@@ -160,17 +160,13 @@
 <body>
 
   <header>
-    <h1>🌈 우리 반 누리집</h1>
-    <p>친구들과 함께 만들어가는 즐거운 우리 반</p>
+    <h1>1-3반 누리집</h1>
+    <p>행복한~~1학년3반</p>
   </header>
 
   <nav>
     <button class="active" onclick="showSection('notice', this)">
-      📢 공지
-    </button>
-
-    <button onclick="showSection('chat', this)">
-      💬 대화
+      공지사항
     </button>
   </nav>
 
@@ -182,52 +178,27 @@
         <h2>📢 우리 반 공지</h2>
 
         <div class="notice">
-          <strong>📚 준비물 안내</strong>
+          <strong>준비물 안내</strong>
           내일 수업에 필요한 준비물을 꼭 챙겨주세요.
         </div>
 
         <div class="notice">
-          <strong>🎨 학급 활동 안내</strong>
-          이번 주 금요일에는 재미있는 학급 활동이 있습니다.
+          <strong>숙제 안내</strong>
+          국어와 수학 숙제가 있어요
+          
         </div>
 
         <div class="notice">
-          <strong>⭐ 알림</strong>
-          모두 즐겁고 안전하게 학교생활을 해요!
+          <strong>알림</strong>
+          중간고사 준비를 열심히해요
+          31일 논술평가(과학)을 준비 해요
         </div>
 
       </div>
     </section>
 
 
-    <!-- 대화 -->
-    <section id="chat" class="section">
-      <div class="card">
-        <h2>💬 우리 반 대화방</h2>
-
-        <div class="chat-box" id="chatBox">
-          <div class="message">
-            안녕하세요! 😊
-          </div>
-
-          <div class="message">
-            오늘도 즐거운 하루 보내요!
-          </div>
-        </div>
-
-        <div class="chat-input">
-          <input
-            type="text"
-            id="messageInput"
-            placeholder="친구들에게 메시지를 남겨보세요."
-            onkeydown="if(event.key === 'Enter') sendMessage()"
-          >
-
-          <button onclick="sendMessage()">보내기</button>
-        </div>
-      </div>
-    </section>
-
+   
   </main>
 
   <footer>
