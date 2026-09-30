@@ -1,0 +1,287 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 반 누리집</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", sans-serif;
+      background-color: #f5f8ff;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6c8cff, #8f7cff);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 36px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    nav {
+      background: white;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    nav button {
+      border: none;
+      background: #eef1ff;
+      color: #4d5fc4;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background: #667eea;
+      color: white;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #5369d8;
+    }
+
+    .notice {
+      border-left: 5px solid #667eea;
+      padding: 15px;
+      background: #f7f8ff;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .chat-box {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      background: #fafafa;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      background: #e9edff;
+      padding: 10px 14px;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      width: fit-content;
+      max-width: 80%;
+    }
+
+    .message.me {
+      background: #667eea;
+      color: white;
+      margin-left: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 15px;
+    }
+
+    .chat-input button {
+      border: none;
+      background: #667eea;
+      color: white;
+      padding: 0 22px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🌈 우리 반 누리집</h1>
+    <p>친구들과 함께 만들어가는 즐거운 우리 반</p>
+  </header>
+
+  <nav>
+    <button class="active" onclick="showSection('notice', this)">
+      📢 공지
+    </button>
+
+    <button onclick="showSection('chat', this)">
+      💬 대화
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- 공지 -->
+    <section id="notice" class="section active">
+      <div class="card">
+        <h2>📢 우리 반 공지</h2>
+
+        <div class="notice">
+          <strong>📚 준비물 안내</strong>
+          내일 수업에 필요한 준비물을 꼭 챙겨주세요.
+        </div>
+
+        <div class="notice">
+          <strong>🎨 학급 활동 안내</strong>
+          이번 주 금요일에는 재미있는 학급 활동이 있습니다.
+        </div>
+
+        <div class="notice">
+          <strong>⭐ 알림</strong>
+          모두 즐겁고 안전하게 학교생활을 해요!
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 대화 -->
+    <section id="chat" class="section">
+      <div class="card">
+        <h2>💬 우리 반 대화방</h2>
+
+        <div class="chat-box" id="chatBox">
+          <div class="message">
+            안녕하세요! 😊
+          </div>
+
+          <div class="message">
+            오늘도 즐거운 하루 보내요!
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="친구들에게 메시지를 남겨보세요."
+            onkeydown="if(event.key === 'Enter') sendMessage()"
+          >
+
+          <button onclick="sendMessage()">보내기</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 우리 반 누리집
+  </footer>
+
+
+  <script>
+    // 메뉴 전환
+    function showSection(sectionId, button) {
+
+      const sections = document.querySelectorAll(".section");
+
+      sections.forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.getElementById(sectionId).classList.add("active");
+
+      const buttons = document.querySelectorAll("nav button");
+
+      buttons.forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+    }
+
+
+    // 대화 메시지 보내기
+    function sendMessage() {
+
+      const input = document.getElementById("messageInput");
+      const chatBox = document.getElementById("chatBox");
+
+      const message = input.value.trim();
+
+      if (message === "") {
+        return;
+      }
+
+      const newMessage = document.createElement("div");
+
+      newMessage.className = "message me";
+      newMessage.textContent = message;
+
+      chatBox.appendChild(newMessage);
+
+      input.value = "";
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
+```
