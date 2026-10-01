@@ -197,6 +197,38 @@
       </div>
     </section>
 
+    <!-- 메인 화면에 추가할 자유게시판 이동 버튼 -->
+<div style="text-align: center; margin: 20px 0;">
+    <button onclick="location.href='board.html'" class="go-board-btn">
+        🏫 1학년 3반 자유게시판 바로가기
+    </button>
+</div>
+
+<!-- 버튼을 예쁘게 꾸며주는 디자인 스타일 (Head 태그 안이나 Style 태그에 넣으세요) -->
+<style>
+    .go-board-btn {
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: #4a90e2; /* 푸른 학교 톤 색상 */
+        border: none;
+        border-radius: 50px; /* 둥근 캡슐 모양 버튼 */
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
+        transition: all 0.3s ease;
+    }
+    .go-board-btn:hover {
+        background-color: #357abd;
+        transform: translateY(-2px); /* 마우스 올리면 살짝 위로 뜸 */
+        box-shadow: 0 6px 12px rgba(74, 144, 226, 0.4);
+    }
+    .go-board-btn:active {
+        transform: translateY(0);
+    }
+</style>
+
+
 
    
   </main>
