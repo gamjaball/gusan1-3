@@ -5,45 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏫 1학년 3반 자유게시판</title>
     
-    <!-- ⚠️ 중요: Firebase v8 라이브러리 정상 로드 -->
+    <!-- Firebase v8 라이브러리 정상 로드 -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
 
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f4f6f9; margin: 0; }
-        .container { max-width: 600px; margin: 30px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        h2 { text-align: center; color: #333; margin-top: 0; margin-bottom: 20px; }
-        .back-btn { background: none; border: none; color: #777; cursor: pointer; font-size: 14px; margin-bottom: 15px; padding: 0; }
-        .back-btn:hover { color: #333; text-decoration: underline; }
-        .input-box { margin-bottom: 20px; display: flex; gap: 10px; }
-        input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
+        .container { max-width: 600px; margin: 30px auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .back-btn { background: none; border: none; color: #888; cursor: pointer; font-size: 14px; margin-bottom: 20px; padding: 0; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+        .back-btn:hover { color: #333; }
+        h2 { color: #333; margin: 0 0 25px 0; font-size: 24px; text-align: center; }
+        .input-box { display: flex; flex-direction: column; gap: 10px; background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e2e8f0; }
+        .input-row { display: flex; gap: 10px; }
+        input { padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; }
         input:focus { border-color: #4a90e2; }
-        #nameInput { width: 80px; text-align: center; }
+        #nameInput { width: 90px; text-align: center; }
         #contentInput { flex: 1; }
-        .submit-btn { padding: 12px 20px; border: none; background-color: #4a90e2; color: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+        .submit-btn { padding: 12px; border: none; background-color: #4a90e2; color: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; transition: background 0.2s; }
         .submit-btn:hover { background-color: #357abd; }
-        .post-list { list-style: none; padding: 0; margin: 0; }
-        .post-item { padding: 15px; border-bottom: 1px solid #eee; background: #fff; animation: fadeIn 0.3s ease; }
-        .post-item:last-child { border-bottom: none; }
-        .post-name { font-weight: bold; color: #333; margin-bottom: 6px; font-size: 14px; }
-        .post-text { color: #555; font-size: 15px; line-height: 1.4; word-break: break-all; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .post-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+        .post-item { padding: 16px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; animation: fadeIn 0.3s ease; }
+        .post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .post-name { font-weight: bold; color: #1e293b; font-size: 14px; }
+        .post-date { color: #94a3b8; font-size: 12px; }
+        .post-text { color: #334155; font-size: 15px; line-height: 1.5; word-break: break-all; white-space: pre-line; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- 메인으로 돌아가는 버튼 -->
-        <button class="back-btn" onclick="location.href='index.html'">← 메인 화면으로 돌아가기</button>
+        <a href="index.html" class="back-btn">← 메인 화면으로 이동</a>
         <h2>🏫 1학년 3반 자유게시판</h2>
 
-        <!-- 글쓰기 입력창 구역 -->
+        <!-- 글쓰기 입력 영역 -->
         <div class="input-box">
-            <input type="text" id="nameInput" placeholder="이름" maxlength="5">
-            <input type="text" id="contentInput" placeholder="반 친구들에게 하고 싶은 말을 적어보세요!" maxlength="100">
-            <button class="submit-btn" onclick="writePost()">등록</button>
+            <div class="input-row">
+                <input type="text" id="nameInput" placeholder="이름" maxlength="5">
+                <input type="text" id="contentInput" placeholder="반 친구들에게 하고 싶은 말을 적어보세요!" maxlength="100">
+            </div>
+            <button class="submit-btn" onclick="writePost()">등록하기</button>
         </div>
 
-        <!-- 실시간 글 목록 구역 -->
+        <!-- 실시간 글 목록 영역 -->
         <ul class="post-list" id="postList"></ul>
     </div>
 
@@ -78,9 +82,16 @@
             }).then(() => {
                 document.getElementById("contentInput").value = "";
             }).catch((error) => {
-                alert("글 등록에 실패했습니다. Firebase의 Rules(규칙) 설정을 확인해 보세요!");
+                alert("글 등록에 실패했습니다. Firebase Rules 설정을 확인하세요!");
                 console.error(error);
             });
+        }
+
+        // 시간 표시 포맷 함수
+        function formatDate(timestamp) {
+            if (!timestamp) return "";
+            const date = timestamp.toDate();
+            return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
         }
 
         // 실시간 글 목록 감지 함수
@@ -93,7 +104,10 @@
                 const li = document.createElement("li");
                 li.className = "post-item";
                 li.innerHTML = `
-                    <div class="post-name">${data.name}</div>
+                    <div class="post-header">
+                        <div class="post-name">👤 ${data.name}</div>
+                        <div class="post-date">${formatDate(data.date)}</div>
+                    </div>
                     <div class="post-text">${data.content}</div>
                 `;
                 postList.appendChild(li);
